@@ -15,7 +15,7 @@ const AuthLayout = ({ children, title = "" }) => {
         className="box-shadow"
         xs={3}
         sx={{
-          width: { sm: 450 },
+          width: { sm: 350, md: 450 },
           backgroundColor: "white",
           padding: 3,
           borderRadius: 2,
