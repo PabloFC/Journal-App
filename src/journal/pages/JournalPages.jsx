@@ -1,16 +1,28 @@
+import { IconButton } from "@mui/material";
 import JournalLayout from "../layout/JournalLayout";
+// import NoteView from "../views/NoteView";
 import NothingSelectedView from "../views/NothingSelectedView";
+import { AddOutlined } from "@mui/icons-material";
 
 const JournalPages = () => {
   return (
     <JournalLayout>
-      {/* <Typography>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci,
-        error incidunt odit ex labore cum, id expedita dignissimos consequatur
-        fuga atque ea dolore suscipit praesentium nobis omnis enim a. Dolor?
-      </Typography> */}
       <NothingSelectedView />
-      {/* NoteView */}
+      {/* <NoteView /> */}
+
+      <IconButton
+        size="large"
+        sx={{
+          color: "white",
+          backgroundColor: "error.main",
+          ":hover": { backgroundColor: "error.main", opacity: 0.9 },
+          position: "fixed",
+          right: 50,
+          bottom: 50,
+        }}
+      >
+        <AddOutlined sx={{ fontSize: 30 }} />
+      </IconButton>
     </JournalLayout>
   );
 };
