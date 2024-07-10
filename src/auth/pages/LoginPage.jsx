@@ -12,8 +12,8 @@ import {
 const LoginPage = () => {
   const dispatch = useDispatch();
   const { email, password, onInputChange } = useForm({
-    email: "pablo@google.com",
-    password: "123456",
+    email: "pfyc88@google.com",
+    password: "1234",
   });
 
   const onSubmit = (event) => {

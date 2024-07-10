@@ -1,11 +1,14 @@
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { GoogleAuthProvider, signInWithRedirect } from "firebase/auth";
 import { FirebaseAuth } from "./config";
 
 const googleProvider = new GoogleAuthProvider();
+googleProvider.setCustomParameters({
+  prompt: "select_account",
+});
 
 export const signInWithGoogle = async () => {
   try {
-    const result = await signInWithPopup(FirebaseAuth, googleProvider);
+    const result = await signInWithRedirect(FirebaseAuth, googleProvider);
     // const credentials = GoogleAuthProvider.credentialFromResult(res);
     // console.log({ credentials });
     const { displayName, email, photoURL, uid } = result.user;
@@ -18,7 +21,6 @@ export const signInWithGoogle = async () => {
       uid,
     };
   } catch (err) {
-    const errorCode = err.code;
     const errorMessage = err.message;
 
     return {
