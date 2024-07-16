@@ -2,10 +2,11 @@ import { Grid, TextField, Typography, Button, Link } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 import AuthLayout from "../layout/AuthLayout";
 import { useForm } from "../../hooks/useForm";
+import { useState } from "react";
 
 const formData = {
   email: "pfyc88@google.com",
-  password: "1234",
+  password: "1234678",
   displayName: "PabloFC",
 };
 
@@ -15,9 +16,11 @@ const formValidations = {
     (value) => value.length >= 6,
     "El password debe de tener más de 6 letras",
   ],
-  displayName: [(value) => value.length >= 1, "El nombre es obligatorio"],
+  displayName: [(value) => value.length !== 0, "El nombre es obligatorio"],
 };
 const RegisterPage = () => {
+  const [formSubmitted, setFormSubmitted] = useState(false);
+
   const {
     displayName,
     email,
@@ -49,8 +52,8 @@ const RegisterPage = () => {
               name="displayName"
               value={displayName}
               onChange={onInputChange}
-              error={!displayNameValid}
-              helperText={!displayNameValid && "El nombre es obligatorio"}
+              error={!!displayNameValid && formSubmitted}
+              helperText={displayNameValid}
             />
           </Grid>
           <Grid item xs={12} sx={{ mt: 2 }}>
@@ -62,6 +65,8 @@ const RegisterPage = () => {
               name="email"
               value={email}
               onChange={onInputChange}
+              error={!!emailValid && formSubmitted}
+              helperText={emailValid}
             />
           </Grid>
 
@@ -74,6 +79,8 @@ const RegisterPage = () => {
               name="password"
               value={password}
               onChange={onInputChange}
+              error={!!passwordValid}
+              helperText={passwordValid && formSubmitted}
             />
           </Grid>
 
