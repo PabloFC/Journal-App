@@ -18,7 +18,7 @@ const formValidations = {
   ],
   displayName: [(value) => value.length !== 0, "El nombre es obligatorio"],
 };
-const RegisterPage = () => {
+export const RegisterPage = () => {
   const [formSubmitted, setFormSubmitted] = useState(false);
 
   const {
@@ -37,7 +37,10 @@ const RegisterPage = () => {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    console.log(formState);
+    // console.log(formState);
+    setFormSubmitted(true);
+
+    if (!isFormValid) return;
   };
   return (
     <AuthLayout title="Crear cuenta">
