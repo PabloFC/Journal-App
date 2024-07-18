@@ -3,22 +3,25 @@ import { Link as RouterLink } from "react-router-dom";
 import AuthLayout from "../layout/AuthLayout";
 import { useForm } from "../../hooks/useForm";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { startCreatingUserWithEmailPassword } from "../../store/auth/thunks";
 
 const formData = {
-  email: "pfyc88@google.com",
-  password: "1234678",
-  displayName: "PabloFC",
+  email: "",
+  password: "",
+  displayName: "",
 };
 
 const formValidations = {
-  email: [(value) => value.includes("@"), "El correo debe tener un @"],
+  email: [(value) => value.includes("@"), "El correo debe de tener una @"],
   password: [
     (value) => value.length >= 6,
-    "El password debe de tener más de 6 letras",
+    "El password debe de tener más de 6 letras.",
   ],
-  displayName: [(value) => value.length !== 0, "El nombre es obligatorio"],
+  displayName: [(value) => value.length >= 1, "El nombre es obligatorio."],
 };
 export const RegisterPage = () => {
+  const dispatch = useDispatch();
   const [formSubmitted, setFormSubmitted] = useState(false);
 
   const {
@@ -33,14 +36,15 @@ export const RegisterPage = () => {
     isFormValid,
   } = useForm(formData, formValidations);
 
-  console.log(displayNameValid);
+  // console.log("displayNameValid:", displayNameValid);
 
   const onSubmit = (event) => {
     event.preventDefault();
-    // console.log(formState);
     setFormSubmitted(true);
 
     if (!isFormValid) return;
+    // console.log(formState);
+    dispatch(startCreatingUserWithEmailPassword(formState));
   };
   return (
     <AuthLayout title="Crear cuenta">
