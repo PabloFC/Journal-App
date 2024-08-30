@@ -23,7 +23,7 @@ const LoginPage = () => {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    console.log({ email, password });
+    // console.log({ email, password });
     dispatch(checkingAuththentication());
   };
 
