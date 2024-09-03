@@ -1,4 +1,5 @@
 import {
+  signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   GoogleAuthProvider,
   signInWithRedirect,
@@ -66,4 +67,29 @@ export const registerUserWithEmailPassword = async ({
       errorMessage: error.message,
     };
   }
+};
+
+export const startLoginWithEmailPassword = ({ email, password }) => {
+  return async () => {
+    try {
+      const resp = await signInWithEmailAndPassword(
+        FirebaseAuth,
+        email,
+        password
+      );
+      const { uid, photoURL, displayName } = resp.user;
+      return {
+        ok: true,
+        uid,
+        photoURL,
+        displayName,
+      };
+    } catch (error) {
+      console.log(error);
+      return {
+        ok: false,
+        errorMessage: error.message,
+      };
+    }
+  };
 };

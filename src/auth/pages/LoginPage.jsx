@@ -1,17 +1,22 @@
 import { Google } from "@mui/icons-material";
-import { Grid, TextField, Typography, Button, Link } from "@mui/material";
+import {
+  Grid,
+  TextField,
+  Typography,
+  Button,
+  Link,
+  Alert,
+} from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 import AuthLayout from "../layout/AuthLayout";
 import { useForm } from "../../hooks/useForm";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  checkingAuththentication,
-  startGoogleSignIn,
-} from "../../store/auth/thunks";
+import { startGoogleSignIn } from "../../store/auth/thunks";
 import { useMemo } from "react";
+import { startLoginWithEmailPassword } from "../../firebase/provider";
 
 const LoginPage = () => {
-  const { status } = useSelector((state) => state.auth);
+  const { status, errorMessage } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
   const { email, password, onInputChange } = useForm({
@@ -24,7 +29,7 @@ const LoginPage = () => {
   const onSubmit = (event) => {
     event.preventDefault();
     // console.log({ email, password });
-    dispatch(checkingAuththentication());
+    dispatch(startLoginWithEmailPassword({ email, password }));
   };
 
   const onGoogleSignIn = () => {
@@ -58,6 +63,12 @@ const LoginPage = () => {
               value={password}
               onChange={onInputChange}
             />
+          </Grid>
+
+          <Grid container display={!!errorMessage ? "" : "none"} sx={{ mt: 2 }}>
+            <Grid item xs={12}>
+              <Alert severity="error">{errorMessage}</Alert>
+            </Grid>
           </Grid>
 
           <Grid container spacing={2} sx={{ mb: 2, mt: 1 }}>
