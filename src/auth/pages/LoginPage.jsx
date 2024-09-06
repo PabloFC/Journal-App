@@ -20,8 +20,8 @@ const LoginPage = () => {
 
   const dispatch = useDispatch();
   const { email, password, onInputChange } = useForm({
-    email: "pfyc88@google.com",
-    password: "1234",
+    email: "",
+    password: "",
   });
 
   const isAuthenticating = useMemo(() => status === "checking", [status]);
