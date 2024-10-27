@@ -7,7 +7,7 @@ import { startNewNote } from "../../store/journal/thunks";
 import { useDispatch } from "react-redux";
 
 const JournalPages = () => {
-  const dispatch = useDispatch;
+  const dispatch = useDispatch();
   const onClickNewNote = () => {
     dispatch(startNewNote());
   };
