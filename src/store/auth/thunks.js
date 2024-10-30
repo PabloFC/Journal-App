@@ -1,3 +1,4 @@
+import { doc, setDoc } from "firebase/firestore/lite";
 import {
   startLoginWithEmailPassword as loginWithEmailPasswordFromProvider,
   logoutFireBase,
@@ -5,6 +6,8 @@ import {
   signInWithGoogle,
 } from "../../firebase/provider";
 import { checkingCredentials, logout, login } from "./authSlice";
+import { FirebaseDB } from "../../firebase/config";
+import { setSaving, updateNote } from "../journal/journalSlice";
 
 export const checkingAuththentication = () => {
   return async (dispatch) => {
@@ -51,7 +54,7 @@ export const startLoginWithEmailPassword = ({ email, password }) => {
       password,
     });
 
-    console.log(result);
+    // console.log(result);
 
     if (!result.ok) return dispatch(logout(result));
 
@@ -63,5 +66,22 @@ export const startLogout = () => {
   return async (dispatch) => {
     await logoutFireBase();
     dispatch(logout());
+  };
+};
+
+export const startSaveNote = () => {
+  return async (dispatch, getState) => {
+    dispatch(setSaving());
+
+    const { uid } = getState().auth;
+    const { active: note } = getState().journal;
+
+    const noteToFireStore = { ...note };
+    delete noteToFireStore.id;
+
+    const docRef = doc(FirebaseDB, `${uid}/journal/notes/${note.id}`);
+    await setDoc(docRef, noteToFireStore, { merge: true });
+
+    dispatch(updateNote(note));
   };
 };
