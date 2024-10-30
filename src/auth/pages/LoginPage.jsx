@@ -15,14 +15,15 @@ import { startGoogleSignIn } from "../../store/auth/thunks";
 import { useMemo } from "react";
 import { startLoginWithEmailPassword } from "../../firebase/provider";
 
+const formData = {
+  email: "",
+  password: "",
+};
 const LoginPage = () => {
   const { status, errorMessage } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
-  const { email, password, onInputChange } = useForm({
-    email: "",
-    password: "",
-  });
+  const { email, password, onInputChange } = useForm(formData);
 
   const isAuthenticating = useMemo(() => status === "checking", [status]);
 
