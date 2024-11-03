@@ -7,7 +7,11 @@ import {
 } from "../../firebase/provider";
 import { checkingCredentials, logout, login } from "./authSlice";
 import { FirebaseDB } from "../../firebase/config";
-import { setSaving, updateNote } from "../journal/journalSlice";
+import {
+  setPhotosToActiveNote,
+  setSaving,
+  updateNote,
+} from "../journal/journalSlice";
 import { fileUpload } from "../../helpers/fileUpload";
 
 export const checkingAuththentication = () => {
@@ -91,6 +95,15 @@ export const startUploadingFiles = (files = []) => {
   return async (dispatch) => {
     dispatch(setSaving());
 
-    await fileUpload(files[0]);
+    // await fileUpload(files[0]);
+
+    const fileUploadPromises = [];
+    for (const file of files) {
+      fileUploadPromises.push(fileUpload(file));
+    }
+
+    const photosUrls = await Promise.all(fileUploadPromises);
+
+    dispatch(setPhotosToActiveNote(photosUrls));
   };
 };
