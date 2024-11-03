@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "../../hooks/useForm";
 import { useEffect, useMemo, useRef } from "react";
 import { setActiveNote } from "../../store/journal/journalSlice";
-import { startSaveNote } from "../../store/auth/thunks";
+import { startUploadingFiles, startSaveNote } from "../../store/auth/thunks";
 import Swal from "sweetalert2";
 import "sweetalert2/dist/sweetalert2.css";
 
@@ -44,7 +44,8 @@ const NoteView = () => {
     // console.log(target.files);
 
     if (target.files === 0) return;
-    // dispatch(startSaveNote({  target.files }));
+
+    dispatch(startUploadingFiles(target.files));
   };
 
   return (

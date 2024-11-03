@@ -8,6 +8,7 @@ import {
 import { checkingCredentials, logout, login } from "./authSlice";
 import { FirebaseDB } from "../../firebase/config";
 import { setSaving, updateNote } from "../journal/journalSlice";
+import { fileUpload } from "../../helpers/fileUpload";
 
 export const checkingAuththentication = () => {
   return async (dispatch) => {
@@ -83,5 +84,13 @@ export const startSaveNote = () => {
     await setDoc(docRef, noteToFireStore, { merge: true });
 
     dispatch(updateNote(note));
+  };
+};
+
+export const startUploadingFiles = (files = []) => {
+  return async (dispatch) => {
+    dispatch(setSaving());
+
+    await fileUpload(files[0]);
   };
 };
