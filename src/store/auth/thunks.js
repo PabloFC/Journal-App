@@ -8,6 +8,7 @@ import {
 import { checkingCredentials, logout, login } from "./authSlice";
 import { FirebaseDB } from "../../firebase/config";
 import {
+  clearNotesLogout,
   setPhotosToActiveNote,
   setSaving,
   updateNote,
@@ -70,6 +71,7 @@ export const startLoginWithEmailPassword = ({ email, password }) => {
 export const startLogout = () => {
   return async (dispatch) => {
     await logoutFireBase();
+    dispatch(clearNotesLogout());
     dispatch(logout());
   };
 };
